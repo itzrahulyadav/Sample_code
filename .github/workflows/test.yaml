@@ -26,3 +26,4 @@ jobs:
       - name: Copy index.html to s3
         run: |
           aws s3 cp ./EC2Status.py s3://${{ env.BUCKET_NAME }}/
+          aws cloudfront create-invalidation --distribution-id E167DK8EBFRLYZ --paths '/*'  
