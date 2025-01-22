@@ -4,7 +4,7 @@ name: AWS example workflow
 on:
   push
 env:
-  BUCKET_NAME : "source-bucket-rxhxl"
+  BUCKET_NAME : "cf-templates-15eh2rxsfpcf8-ap-south-1"
   AWS_REGION : "ap-south-1"
 # permission can be added at job level or workflow level
 permissions:
@@ -19,11 +19,10 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
         with:
-          role-to-assume: arn:aws:iam::533267257785:role/Github-fed-identity 
+          role-to-assume: arn:aws:iam::533267257785:role/GithubActionRole 
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
       # Upload a file to AWS s3
       - name: Copy index.html to s3
         run: |
-          aws s3 cp ./EC2Status.py s3://${{ env.BUCKET_NAME }}/
-          aws cloudfront create-invalidation --distribution-id E167DK8EBFRLYZ --paths '/*'  
+          aws s3 cp ./template.yaml s3://${{ env.BUCKET_NAME }}/ 
