@@ -1,14 +1,20 @@
-Parameters:
-  SubnetPublicCidr:
+# Parameters:
+#   SubnetPublicCidr:
     
-  VpcCidr: 
-    Type: String
-    Description: CIDR block for our vpc
-    Default: 10.20.0.0/16
-Description: "This template creates ec2 instance in the default VPC"
+#   VpcCidr: 
+#     Type: String
+#     Description: CIDR block for our vpc
+#     Default: 10.20.0.0/16
+# Description: "This template creates ec2 instance in the default VPC"
+# Resources:
+#   Instance:
+#     Type: AWS::EC2::Instance
+#     Properties:
+#       ImageId: ami-0d2614eafc1b0e4d2
+#       InstanceType: t3.micro
+
 Resources:
-  Instance:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId: ami-0d2614eafc1b0e4d2
-      InstanceType: t3.micro
+   MyS3Bucket:
+     Type: AWS::S3::Bucket
+     Properties:
+       BucketName: whocaresaboutthisbucket
