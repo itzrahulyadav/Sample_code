@@ -1,21 +1,24 @@
-# Use an official Python runtime as a parent image
-FROM python:3.12
+# Use a minimal Python image
+FROM python:3.12-slim
 
-# Set the working directory in the container
+# Add AWS Lambda Web Adapter as an extension
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.0 /lambda-adapter /opt/extensions/lambda-adapter
+
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the application files to the container
+# Copy application code
 COPY . /app
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port Flask runs on
-EXPOSE 5000
-
-# Set the environment variable to run Flask
+# Set environment variables for Flask & Lambda
 ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
+ENV PORT=8080  
 
-# Command to run the Flask application
-CMD ["flask", "run"]
+# Expose the correct port
+EXPOSE 8080
+
+# Start the Flask app using Gunicorn with dynamic port
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
